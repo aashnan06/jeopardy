@@ -5,145 +5,309 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101a3d">
-<title>Jeopardy! — Two-Team Trivia</title>
+<title>Jeopardy - Two Team Trivia</title>
+
 <style>
 :root {
-  --navy: #101a3d;
-  --gold: #ffd45c;
-  --ink: #111a36;
+  --navy:#101a3d;
+  --gold:#ffd45c;
+  --ink:#111a36;
 }
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
+
 body {
-  margin: 0;
-  background: radial-gradient(ellipse at top,#263d82 0,#101a3d 58%,#090f25 100%);
-  color: white;
-  font-family: system-ui,-apple-system,Segoe UI,Arial,sans-serif;
-  min-height: 100vh;
+  margin:0;
+  background:radial-gradient(ellipse at top,#263d82 0,#101a3d 58%,#090f25 100%);
+  color:white;
+  font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+  min-height:100vh;
 }
+
 header { text-align:center; padding:22px 14px 12px; }
+
 h1 {
-  margin:0; color:var(--gold); font-family:Georgia,serif;
-  font-size:clamp(2rem,6vw,3.4rem); letter-spacing:.07em;
+  margin:0;
+  color:var(--gold);
+  font-family:Georgia,serif;
+  font-size:clamp(2rem,6vw,3.4rem);
+  letter-spacing:.07em;
   text-shadow:0 3px 0 #8c5a13;
 }
-header p { margin:5px 0 0; color:#dce5ff; }
-main { max-width:1200px; margin:auto; padding:12px 16px 40px; }
+
+header p { color:#dce5ff; }
+
+main {
+  max-width:1200px;
+  margin:auto;
+  padding:12px 16px 40px;
+}
+
 .scores {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:12px; margin:12px 0 18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:12px 0 18px;
 }
+
 .team {
-  background:#fff; color:var(--ink); border:3px solid transparent;
-  border-radius:14px; padding:12px 14px;
-  display:grid; grid-template-columns:1fr auto;
-  align-items:center; gap:5px; box-shadow:0 5px 0 #070d20;
+  background:white;
+  color:var(--ink);
+  border:3px solid transparent;
+  border-radius:14px;
+  padding:12px 14px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:5px;
+  box-shadow:0 5px 0 #070d20;
 }
+
 .team.active {
   border-color:var(--gold);
   box-shadow:0 0 0 3px #ffd45c55,0 5px 0 #070d20;
 }
-.team label { font-weight:800; font-size:1.05rem; }
+
+.team label { font-weight:800; }
+
 .team input {
-  border:0; border-bottom:2px solid #c8cee0;
-  font:inherit; font-weight:700; width:100%;
-  min-width:0; padding:3px; color:var(--ink);
+  border:0;
+  border-bottom:2px solid #c8cee0;
+  font:inherit;
+  font-weight:700;
+  width:100%;
+  min-width:0;
+  padding:3px;
+  color:var(--ink);
 }
+
 .score {
   font-size:clamp(1.5rem,4vw,2.1rem);
-  font-weight:900; color:#173b9b; grid-row:span 2;
+  font-weight:900;
+  color:#173b9b;
+  grid-row:span 2;
 }
+
 .turn {
-  text-align:center; color:#ffdf7d;
-  font-weight:700; margin:0 0 12px;
+  text-align:center;
+  color:#ffdf7d;
+  font-weight:700;
+  margin:0 0 12px;
 }
+
 .board {
-  display:grid; grid-template-columns:repeat(6,minmax(0,1fr));
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
   gap:7px;
 }
+
 .category {
-  background:#0c1740; border:1px solid #637bc5;
-  border-radius:8px; min-height:82px;
-  display:flex; align-items:center; justify-content:center;
-  text-align:center; padding:8px 4px; font-weight:900;
+  background:#0c1740;
+  border:1px solid #637bc5;
+  border-radius:8px;
+  min-height:82px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:8px 4px;
+  font-weight:900;
   font-size:clamp(.65rem,1.5vw,1rem);
-  line-height:1.15; text-transform:uppercase;
-  color:#fff; overflow-wrap:anywhere;
+  line-height:1.15;
+  text-transform:uppercase;
+  overflow-wrap:anywhere;
 }
+
 .clue {
-  min-height:76px; border:0; border-radius:8px;
+  min-height:76px;
+  border:0;
+  border-radius:8px;
   background:linear-gradient(145deg,#2858c5,#16358c);
-  color:var(--gold); font-size:clamp(1rem,2.5vw,1.55rem);
-  font-weight:900; cursor:pointer;
+  color:var(--gold);
+  font-size:clamp(1rem,2.5vw,1.55rem);
+  font-weight:900;
+  cursor:pointer;
   box-shadow:0 4px 0 #09163e;
   transition:transform .12s,filter .12s;
 }
+
 .clue:hover:not(:disabled) {
-  filter:brightness(1.2); transform:translateY(-2px);
+  filter:brightness(1.2);
+  transform:translateY(-2px);
 }
+
 .clue:disabled {
-  background:#18234b; color:#68749c;
-  cursor:default; box-shadow:none; text-decoration:line-through;
+  background:#18234b;
+  color:#68749c;
+  cursor:default;
+  box-shadow:none;
+  text-decoration:line-through;
 }
+
 .controls {
-  display:flex; gap:9px; justify-content:center;
-  flex-wrap:wrap; margin:18px 0;
+  display:flex;
+  gap:9px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin:20px 0;
 }
+
 .btn {
-  border:0; border-radius:10px; padding:11px 16px;
-  font-weight:800; font-size:.95rem; cursor:pointer;
+  border:0;
+  border-radius:10px;
+  padding:11px 16px;
+  font-weight:800;
+  font-size:.95rem;
+  cursor:pointer;
 }
+
 .btn.gold { background:var(--gold); color:#241b08; }
 .btn.light { background:#e8edff; color:#14214e; }
-.btn:disabled { opacity:.4; cursor:not-allowed; }
-.modal {
-  position:fixed; inset:0; background:#050a1bdc;
-  display:none; align-items:center; justify-content:center;
-  padding:16px; z-index:5;
+.btn.red { background:#f5b6b6; color:#5b1515; }
+.btn.purple { background:#d9b5ed; color:#38134c; }
+
+.btn:disabled {
+  opacity:.4;
+  cursor:not-allowed;
 }
+
+.modal {
+  position:fixed;
+  inset:0;
+  background:#050a1bdc;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  z-index:5;
+}
+
 .modal.show { display:flex; }
+
 .dialog {
-  width:min(760px,100%); max-height:90vh; overflow:auto;
+  width:min(760px,100%);
+  max-height:90vh;
+  overflow:auto;
   background:linear-gradient(155deg,#1e3d98,#101a3d);
-  border:2px solid var(--gold); border-radius:20px;
-  padding:clamp(20px,5vw,38px); text-align:center;
+  border:2px solid var(--gold);
+  border-radius:20px;
+  padding:clamp(20px,5vw,38px);
+  text-align:center;
   box-shadow:0 20px 80px #0009;
 }
-.dialog .value {
-  color:var(--gold); font-weight:900; letter-spacing:.1em;
+
+.value {
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:.1em;
 }
+
 .dialog h2 {
   font-size:clamp(1.3rem,3.8vw,2rem);
-  line-height:1.4; margin:16px 0 22px;
+  line-height:1.4;
+  margin:16px 0 22px;
 }
+
 .answer {
-  display:none; background:#0a1435; border-radius:12px;
-  padding:16px; margin:15px 0; color:#dce7ff;
-  font-size:1.05rem; line-height:1.5;
+  display:none;
+  background:#0a1435;
+  border-radius:12px;
+  padding:16px;
+  margin:15px 0;
+  color:#dce7ff;
+  font-size:1.05rem;
+  line-height:1.5;
 }
+
 .answer.show { display:block; }
+
 .modal-actions {
-  display:flex; justify-content:center;
-  gap:9px; flex-wrap:wrap; margin-top:18px;
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:18px;
 }
-.small { color:#c6d2f7; font-size:.88rem; margin-top:16px; }
+
+.double-btn {
+  margin:12px 0;
+  border:2px solid var(--gold);
+  background:#182a63;
+  color:var(--gold);
+}
+
+.double-btn.selected {
+  background:var(--gold);
+  color:#18203d;
+}
+
+.status {
+  color:#ffdf7d;
+  font-weight:800;
+  margin:15px 0;
+}
+
+.action-label {
+  color:#ffb5ff;
+  font-weight:900;
+  font-size:1.1rem;
+  margin:12px 0;
+}
+
+.action-instructions {
+  color:#dce7ff;
+  font-size:.95rem;
+  line-height:1.5;
+  margin:15px 0;
+}
+
+.small {
+  color:#c6d2f7;
+  font-size:.88rem;
+  margin-top:16px;
+}
+
+.results-dialog {
+  width:min(550px,100%);
+  text-align:center;
+}
+
+.result-score {
+  background:#0a1435;
+  padding:18px;
+  margin:12px 0;
+  border-radius:12px;
+  font-size:1.3rem;
+  font-weight:800;
+}
+
+.winner {
+  color:var(--gold);
+  font-size:clamp(1.5rem,5vw,2.4rem);
+  font-weight:900;
+  margin:22px 0;
+}
+
 .rules {
-  color:#cbd7ff; text-align:center;
-  font-size:.9rem; margin-top:12px;
+  color:#cbd7ff;
+  text-align:center;
+  font-size:.9rem;
+  margin-top:12px;
 }
+
 @media(max-width:650px) {
   main { padding:8px 8px 28px; }
   .board { gap:4px; }
   .category {
-    min-height:76px; padding:5px 2px;
+    min-height:76px;
+    padding:5px 2px;
     font-size:clamp(.56rem,2vw,.78rem);
   }
   .clue {
-    min-height:62px; border-radius:5px;
+    min-height:62px;
     font-size:clamp(.75rem,2.5vw,1rem);
   }
   .scores { gap:7px; }
   .team { padding:9px; }
-  .team label { font-size:.9rem; }
   .score { font-size:1.4rem; }
 }
 @media(max-width:380px) {
@@ -152,15 +316,18 @@ main { max-width:1200px; margin:auto; padding:12px 16px 40px; }
 }
 </style>
 </head>
+
 <body>
 
 <header>
   <h1>JEOPARDY!</h1>
-  <p>Six categories · Two teams · Expert difficulty</p>
+  <p>Six Categories · Two Teams · Ultimate Trivia Showdown</p>
 </header>
 
 <main>
-<section class="scores" aria-label="Team scores">
+
+<section class="scores">
+
   <div class="team active" id="teamCard0">
     <div>
       <label for="team0">TEAM 1</label>
@@ -176,239 +343,712 @@ main { max-width:1200px; margin:auto; padding:12px 16px 40px; }
     </div>
     <div class="score" id="score1">$0</div>
   </div>
+
 </section>
 
-<p class="turn" id="turn">Team 1 chooses a clue first</p>
+<p class="turn" id="turn"></p>
+
 <section class="board" id="board"></section>
 
 <div class="controls">
-  <button class="btn light" id="switchBtn">Switch active team</button>
-  <button class="btn light" id="resetBtn">Reset game</button>
+  <button class="btn gold" id="resultsBtn">🏆 Final Results</button>
+  <button class="btn red" id="resetBtn">Reset Game</button>
 </div>
 
 <p class="rules">
-  Choose a clue, reveal the answer, then award or deduct points.
-  Questions get harder as the dollar values rise.
+  Keep answering until your team misses! A missed question transfers
+  control to the other team. No points are deducted except for an
+  incorrect Double Jeopardy answer.
 </p>
+
 </main>
 
-<div class="modal" id="modal" role="dialog" aria-modal="true">
+<!-- QUESTION MODAL -->
+
+<div class="modal" id="modal">
   <div class="dialog">
+
     <div class="value" id="clueValue"></div>
+
+    <div class="status" id="status"></div>
+
+    <div class="action-label" id="actionLabel"></div>
+
     <h2 id="question"></h2>
 
-    <button class="btn gold" id="revealBtn">Reveal answer</button>
+    <div class="action-instructions" id="actionInstructions"></div>
+
+    <button class="btn double-btn" id="doubleBtn" style="display:none">
+      ✨ DOUBLE JEOPARDY — Risk $100
+    </button>
+
+    <div class="small" id="doubleInfo"></div>
+
+    <button class="btn gold" id="revealBtn">
+      Reveal Answer
+    </button>
+
     <div class="answer" id="answer"></div>
 
-    <div class="modal-actions">
-      <button class="btn gold" id="correctBtn" disabled>
-        ✓ Correct (+ points)
+    <!-- FIRST TEAM ACTIONS -->
+
+    <div class="modal-actions" id="firstActions">
+
+      <button class="btn gold" id="correctBtn">
+        ✓ Correct Answer
       </button>
-      <button class="btn light" id="wrongBtn" disabled>
-        ✕ Incorrect (− points)
+
+      <button class="btn purple" id="transferBtn">
+        ⇄ Transfer Active Team
       </button>
-      <button class="btn light" id="closeBtn">Close clue</button>
+
     </div>
 
-    <div class="small">
-      The active team receives the score adjustment.
-      Close the clue, then switch teams if needed.
+    <!-- SECOND TEAM ACTIONS -->
+
+    <div class="modal-actions" id="secondActions" style="display:none">
+
+      <button class="btn gold" id="secondCorrectBtn">
+        ✓ Correct Answer
+      </button>
+
+      <button class="btn light" id="secondWrongBtn">
+        ✕ Incorrect — No Points
+      </button>
+
     </div>
+
+    <div class="small" id="modalInstructions">
+      Correct answers earn points. An incorrect answer transfers
+      the question and control to the other team.
+    </div>
+
   </div>
 </div>
 
+<!-- RESULTS MODAL -->
+
+<div class="modal" id="resultsModal">
+
+  <div class="dialog results-dialog">
+
+    <div class="value">GAME OVER</div>
+
+    <h2>🏆 FINAL RESULTS 🏆</h2>
+
+    <div id="finalScores"></div>
+
+    <div class="winner" id="winner"></div>
+
+    <button class="btn gold" id="resultsCloseBtn">
+      Back to Board
+    </button>
+
+  </div>
+
+</div>
+
 <script>
+
+// ==========================================
+// QUESTIONS
+// Each category has six questions:
+// $200, $400, $600, $800, $1000, $1200
+// ==========================================
+
 const categories = [
+
 {
 name:"Bollywood",
 clues:[
-["In Guru Dutt’s 1959 film, this poet-protagonist’s name is also the title of the movie.","Vijay — Pyaasa."],
-["Who composed the music for the 1960 film Mughal-e-Azam?","Naushad."],
-["Which 1975 film was initially released with a different ending in which Jai survives?","Sholay. The original ending was altered before release."],
-["In Satyajit Ray’s Apu Trilogy, what is the name of the first film?","Pather Panchali (1955)."],
-["Which filmmaker directed the 1957 Hindi film Mother India, starring Nargis as Radha?","Mehboob Khan."],
-["In Lagaan, what is the name of the British captain whose team plays the villagers?","Captain Andrew Russell."]
+["This 1992 film marked Shah Rukh Khan's Bollywood film debut.","What is Deewana?"],
+["This 2001 family drama features the famous song 'Shava Shava'.","What is Kabhi Khushi Kabhie Gham?"],
+["Vijay, a struggling poet, is the protagonist of this 1959 Guru Dutt film.","What is Pyaasa?"],
+["He composed the music for the 1960 film Mughal-e-Azam.","Who is Naushad?"],
+["This 1975 film was initially planned to have an ending in which Jai survives.","What is Sholay?"],
+["This 1955 Satyajit Ray film is the first installment of the Apu Trilogy.","What is Pather Panchali?"]
 ]
 },
+
 {
 name:"Indian Mythology",
 clues:[
-["In the Mahabharata, what is the name of the kingdom ruled by the Kauravas from their capital at Hastinapura?","The Kuru Kingdom."],
-["Which sage is traditionally credited with composing the Yoga Sutras and is also associated with grammatical scholarship?","Patanjali."],
-["In the Ramayana, who is the mother of Indrajit (Meghanada), Ravana’s son?","Mandodari."],
-["The Jagannath Rath Yatra is most famously associated with which city in Odisha?","Puri."],
-["In the Bhagavad Gita, on which battlefield does Krishna deliver his teaching to Arjuna?","Kurukshetra."],
-["In the Devi Mahatmya, which buffalo-demon does the goddess Durga defeat?","Mahishasura."]
+["He is the brother of Lord Ganesha.","Who is Lord Kartikeya?"],
+["She is Lord Lakshman's wife in the Ramayana.","Who is Urmila?"],
+["He was the architect who supervised the building of the Ram Setu bridge as part of Lord Rama's Vanara army.","Who is Nala?"],
+["She is the mother of Indrajit, Ravana's son, in the Ramayana.","Who is Mandodari?"],
+["This was the name of the palace where Duryodhana attempted to burn the Pandavas alive.","What is Lakshagriha?"],
+["This buffalo demon was defeated by Goddess Durga.","Who is Mahishasura?"]
 ]
 },
+
 {
 name:"Thanksgiving",
 clues:[
-["The 1621 harvest gathering commonly called the First Thanksgiving took place in which present-day U.S. state?","Massachusetts, at Plymouth."],
-["Which Indigenous people are documented as having participated in the 1621 Plymouth harvest gathering?","The Wampanoag people."],
-["Which president signed the 1941 federal law fixing Thanksgiving on the fourth Thursday of November?","Franklin D. Roosevelt."],
-["What controversial change did Franklin D. Roosevelt make to Thanksgiving in 1939?","He moved it one week earlier to lengthen the Christmas shopping season. It became known as Franksgiving."],
-["Which U.S. woman campaigned for decades to establish a national Thanksgiving holiday?","Sarah Josepha Hale."],
-["According to Edward Winslow's account, approximately how long did the 1621 Plymouth gathering last?","Three days."]
+["This was the name of the ship that brought the Pilgrims to America.","What is the Mayflower?"],
+["This Massachusetts town was the location of the famous 1621 harvest gathering.","What is Plymouth?"],
+["This Indigenous people participated in the 1621 Plymouth harvest gathering.","Who are the Wampanoag?"],
+["He was president when a 1941 federal law fixed Thanksgiving on the fourth Thursday of November.","Who is Franklin D. Roosevelt?"],
+["This is the year traditionally associated with the first Thanksgiving celebration.","What is 1621?"],
+["According to Edward Winslow's account, this is how long the 1621 Plymouth gathering lasted.","What is three days?"]
 ]
 },
+
 {
 name:"Indian History",
 clues:[
-["Which 1793 colonial land-revenue arrangement in Bengal made zamindars responsible for fixed payments to the East India Company?","The Permanent Settlement, introduced by Lord Cornwallis."],
-["The Allahabad Pillar inscription praising Samudragupta was composed by which court poet?","Harisena."],
-["Which 1905 British viceroy partitioned Bengal, helping ignite the Swadeshi movement?","Lord Curzon."],
-["At which 1929 Congress session was Purna Swaraj adopted as the goal of Indian independence?","The Lahore Session, presided over by Jawaharlal Nehru."],
-["Which 18th-century Mysore ruler used rocket artillery against the British and died at the Siege of Seringapatam in 1799?","Tipu Sultan."],
-["Who was the first Indian woman to become president of the Indian National Congress?","Annie Besant, in 1917."]
+["He was popularly known as the 'Grand Old Man of India'.","Who is Dadabhai Naoroji?"],
+["This ancient Indian university was located in present-day Bihar.","What is Nalanda University?"],
+["This British viceroy partitioned Bengal in 1905, helping ignite the Swadeshi movement.","Who is Lord Curzon?"],
+["At this 1929 Congress session, Purna Swaraj was adopted as the goal of Indian independence.","What is the Lahore Session?"],
+["This Mysore ruler used rocket artillery against the British and died at the Siege of Seringapatam in 1799.","Who is Tipu Sultan?"],
+["She became the first woman president of the Indian National Congress in 1917.","Who is Annie Besant?"]
 ]
 },
+
 {
 name:"World History",
 clues:[
-["The 1648 Peace of Westphalia is commonly associated with ending which major European conflict?","The Thirty Years’ War."],
-["Which 14th-century West African ruler’s pilgrimage to Mecca became famous for the enormous quantities of gold he distributed?","Mansa Musa of the Mali Empire."],
-["What 1884–85 conference formalized European rules for claiming territory in Africa, without African representation?","The Berlin Conference."],
-["Which Byzantine emperor commissioned the compilation of Roman law known as the Corpus Juris Civilis?","Justinian I."],
-["The Meiji Restoration of 1868 ended the rule of which Japanese shogunate?","The Tokugawa shogunate."],
-["Which 1815 diplomatic settlement reshaped Europe after Napoleon’s defeat at Waterloo?","The Congress of Vienna."]
+["This ancient civilization built the famous pyramids at Giza.","What is ancient Egypt?"],
+["This was the year the Berlin Wall fell, symbolizing the end of the Cold War era.","What is 1989?"],
+["This 14th-century ruler of the Mali Empire became famous for his incredibly wealthy pilgrimage to Mecca.","Who is Mansa Musa?"],
+["This 1884–85 conference established European rules for claiming territory in Africa.","What is the Berlin Conference?"],
+["This city served as the capital of the Byzantine Empire.","What is Constantinople?"],
+["This Japanese shogunate ended during the Meiji Restoration of 1868.","What is the Tokugawa shogunate?"]
 ]
 },
+
 {
 name:"Indian Sweets",
 clues:[
-["Which Gujarati sweet is made from gram flour batter fermented with yogurt, steamed, and tempered with mustard seeds?","Dhokla (khaman is a closely related gram-flour preparation)."],
-["Which Rajasthani disc-shaped sweet has a honeycomb-like texture, is made by pouring batter into hot ghee, and is often topped with rabri?","Ghevar."],
-["Which chhena-based Odisha sweet is traditionally baked or roasted until browned, rather than boiled in syrup?","Chhena poda."],
-["What is the key thickening dairy ingredient in the North Indian sweet peda, besides sugar and flavorings?","Khoya (mawa)."],
-["Which Maharashtra sweet is made from steamed rice-flour dumplings filled with coconut and jaggery, commonly offered to Ganesha?","Modak."],
-["In the Bengali sweet sandesh, what fresh cheese is the principal base?","Chhena (fresh curd cheese)."]
+["This traditional Maharashtrian sweet is made from roasted gram flour, ghee, and sugar.","What is besan ladoo?"],
+["This Indian dessert is made by soaking fried bread pieces in thickened sweet milk.","What is shahi tukda?"],
+["This Bengali sweet is made from chhena and shaped into soft balls in syrup.","What is rasgulla?"],
+["This Rajasthani disc-shaped sweet has a honeycomb-like texture and is often topped with rabri.","What is ghevar?"],
+["This Bengali dessert is made by slowly cooking milk until thick and creamy, then sweetening it with sugar or jaggery.","What is payesh?"],
+["This fresh curd cheese is the principal ingredient in Bengali sandesh.","What is chhena?"]
 ]
 }
 ];
+
+// ==========================================
+// CATEGORY-SPECIFIC CHARADES
+// Exactly 3 are randomly selected per game.
+// ==========================================
+
+const actionChallenges = [
+
+{category:0,prompt:"Act out a famous bollywood hook-step. Your team must guess the song"},
+
+{category:0,prompt:"Act out a famous actor/actress. Your team must guess who you're acting out"},
+
+{category:0,prompt:"Act out a famous bollywood scene. Yur team must guess what you are acting out"},
+
+{category:0,prompt:"Act out Khabi Khushi Khabie Gham, your team must guess the movie"},
+
+{category:1,prompt:"Act out Hanuman carrying the Sanjeevani mountain. Your team must guess the Ramayana character and scene!"},
+
+{category:1,prompt:"Act out Lord Ganesha's birth story. Your team must guess the deity!"},
+
+{category:1,prompt:"Act out Krishna playing the flute and enchanting the people of Vrindavan. Your team must guess who you are!"},
+
+{category:1,prompt:"Act out Ram lifting and stringing the bow during Swayamvar. Your team must guess what is happening"},
+
+{category:2,prompt:"Act out a turkey trying to escape Thanksgiving dinner!"},
+
+{category:2,prompt:"Act out someone falling asleep after eating way too much Thanksgiving food!"},
+
+{category:2,prompt:"Act out Black Friday shopping in a huge crowded mall"},
+
+{category:3,prompt:"Act out the meeting between Shivaji and Afzal Khan and Shivaji killing Afzal Khan. Your team must guess the historical event!"},
+
+{category:3,prompt:"Act out the construction of the Taj Mahal. Your team must guess the monument!"},
+
+{category:4,prompt:"Act out the first moon landing. Your team must guess the historical event!"},
+
+{category:4,prompt:"Act out the sinking of the Titanic."},
+
+{category:5,prompt:"Act out someone making jalebi. Your team must guess the dessert!"},
+
+{category:5,prompt:"Act out preparing modak!"},
+
+{category:5,prompt:"Act out eating a very hot samosa and trying not to burn your mouth!"}
+
+];
+
+// ==========================================
+// GAME STATE
+// ==========================================
 
 const values = [200,400,600,800,1000,1200];
 
 let scores = [0,0];
 let active = 0;
 let current = null;
+
 let used = new Set();
 
-const board = document.getElementById('board');
-const modal = document.getElementById('modal');
+let actionPositions = new Map();
+let doublePositions = new Set();
+
+// ==========================================
+// RANDOMIZE SPECIAL QUESTIONS
+// ==========================================
+
+function shuffle(array) {
+
+  const copy = [...array];
+
+  for(let i=copy.length-1;i>0;i--) {
+
+    const j = Math.floor(Math.random()*(i+1));
+
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+
+  return copy;
+}
+
+function randomizeSpecialQuestions() {
+
+  actionPositions.clear();
+  doublePositions.clear();
+
+  // Pick exactly three action challenges.
+  const actions = shuffle(actionChallenges).slice(0,3);
+
+  actions.forEach(action => {
+
+    const availableRows = [0,1,2,3,4,5];
+
+    const row = Math.floor(Math.random()*availableRows.length);
+
+    const key = `${action.category}-${row}`;
+
+    actionPositions.set(key,action);
+  });
+
+  // Double Jeopardy is available on only eight clues.
+  // Only $600 and higher questions can be selected.
+  const candidates = [];
+
+  for(let c=0;c<categories.length;c++) {
+
+    for(let r=2;r<6;r++) {
+
+      const key = `${c}-${r}`;
+
+      if(!actionPositions.has(key)) {
+        candidates.push(key);
+      }
+    }
+  }
+
+  shuffle(candidates).slice(0,8).forEach(key => {
+    doublePositions.add(key);
+  });
+}
+
+// ==========================================
+// ELEMENTS
+// ==========================================
+
+const board = document.getElementById("board");
+const modal = document.getElementById("modal");
+const resultsModal = document.getElementById("resultsModal");
 
 function teamName(i) {
-  return document.getElementById('team'+i).value.trim() || `Team ${i+1}`;
+
+  return document.getElementById("team"+i).value.trim()
+    || `Team ${i+1}`;
 }
+
+function formatMoney(amount) {
+
+  return "$" + amount.toLocaleString();
+}
+
+// ==========================================
+// UPDATE SCORES AND ACTIVE TEAM
+// ==========================================
 
 function update() {
-  for(let i=0;i<2;i++) {
-    document.getElementById('score'+i).textContent =
-      (scores[i]<0?'−':'$') + Math.abs(scores[i]).toLocaleString();
 
-    document.getElementById('teamCard'+i)
-      .classList.toggle('active',active===i);
+  for(let i=0;i<2;i++) {
+
+    document.getElementById("score"+i).textContent =
+      formatMoney(scores[i]);
+
+    document.getElementById("teamCard"+i)
+      .classList.toggle("active",active===i);
   }
-  document.getElementById('turn').textContent =
-    `${teamName(active)} is up — choose a clue`;
+
+  document.getElementById("turn").textContent =
+    teamName(active) + " is in control — choose a question!";
 }
 
-function build() {
-  board.innerHTML = '';
+// ==========================================
+// BUILD BOARD
+// ==========================================
 
+function build() {
+
+  board.innerHTML = "";
+
+  // Category headers
   categories.forEach(cat => {
-    const h = document.createElement('div');
-    h.className = 'category';
+
+    const h = document.createElement("div");
+
+    h.className = "category";
     h.textContent = cat.name;
+
     board.appendChild(h);
   });
 
-  values.forEach((v,r) => {
-    categories.forEach((cat,c) => {
-      const key = `${c}-${r}`;
-      const b = document.createElement('button');
-      b.className = 'clue';
-      b.textContent = `$${v.toLocaleString()}`;
-      b.disabled = used.has(key);
-      b.setAttribute('aria-label',`${cat.name}, ${v} points`);
-      b.onclick = () => openClue(c,r,key);
-      board.appendChild(b);
+  // Question buttons
+  values.forEach((value,row) => {
+
+    categories.forEach((cat,col) => {
+
+      const key = `${col}-${row}`;
+
+      const button = document.createElement("button");
+
+      button.className = "clue";
+      button.textContent = formatMoney(value);
+
+      // Do not visually identify action questions
+      // or Double Jeopardy questions on the board.
+
+      button.disabled = used.has(key);
+
+      button.onclick = () => openClue(col,row,key);
+
+      board.appendChild(button);
     });
   });
 }
 
-function openClue(c,r,key) {
-  current = {c,r,key,value:values[r]};
+// ==========================================
+// OPEN A QUESTION
+// ==========================================
 
-  document.getElementById('clueValue').textContent =
-    `${categories[c].name} · $${values[r].toLocaleString()}`;
+function openClue(col,row,key) {
 
-  document.getElementById('question').textContent =
-    categories[c].clues[r][0];
+  const isAction = actionPositions.has(key);
 
-  document.getElementById('answer').textContent =
-    categories[c].clues[r][1];
+  const action = actionPositions.get(key);
 
-  document.getElementById('answer').classList.remove('show');
-  document.getElementById('revealBtn').style.display = 'inline-block';
-  document.getElementById('correctBtn').disabled = true;
-  document.getElementById('wrongBtn').disabled = true;
+  current = {
+    col,
+    row,
+    key,
+    baseValue:values[row],
+    action:isAction,
+    prompt:action ? action.prompt : null,
+    doubled:false,
+    phase:"first",
+    firstTeam:active
+  };
 
-  modal.classList.add('show');
+  document.getElementById("clueValue").textContent =
+    categories[col].name + " · " + formatMoney(values[row]);
+
+  document.getElementById("status").textContent =
+    teamName(active) + " is answering.";
+
+  document.getElementById("actionLabel").textContent =
+    isAction ? "🎭 ACTION CHALLENGE!" : "";
+
+  document.getElementById("question").textContent =
+    isAction ? action.prompt : categories[col].clues[row][0];
+
+  document.getElementById("actionInstructions").textContent =
+    isAction
+      ? "One teammate must act out this prompt without speaking. The rest of the team must guess. The host decides if they succeed!"
+      : "";
+
+  document.getElementById("answer").textContent =
+    isAction
+      ? "Host: judge whether the team successfully completed the acting challenge."
+      : categories[col].clues[row][1];
+
+  document.getElementById("answer").classList.remove("show");
+
+  // Reveal answer only for regular trivia.
+  document.getElementById("revealBtn").style.display =
+    isAction ? "none" : "inline-block";
+
+  // Show Double Jeopardy only on selected clues.
+  const doubleButton = document.getElementById("doubleBtn");
+
+  doubleButton.style.display =
+    doublePositions.has(key) && !isAction
+      ? "inline-block"
+      : "none";
+
+  doubleButton.disabled = false;
+  doubleButton.classList.remove("selected");
+
+  document.getElementById("doubleInfo").textContent = "";
+
+  document.getElementById("firstActions").style.display = "flex";
+  document.getElementById("secondActions").style.display = "none";
+
+  document.getElementById("modalInstructions").textContent =
+    "Correct answers earn points. If your team gets it wrong or cannot answer, transfer control to the other team.";
+
+  modal.classList.add("show");
 }
 
-function closeClue() {
-  modal.classList.remove('show');
+// ==========================================
+// DOUBLE JEOPARDY
+// ==========================================
 
-  if(current) {
-    used.add(current.key);
-    build();
-    current = null;
+document.getElementById("doubleBtn").onclick = () => {
+
+  if(!current || current.doubled) return;
+
+  current.doubled = true;
+
+  const doubleButton = document.getElementById("doubleBtn");
+
+  doubleButton.classList.add("selected");
+  doubleButton.disabled = true;
+
+  document.getElementById("clueValue").textContent =
+    categories[current.col].name +
+    " · " + formatMoney(current.baseValue * 2) +
+    " — DOUBLE JEOPARDY!";
+
+  document.getElementById("doubleInfo").textContent =
+    "If your team gets this wrong, it loses $100. If correct, it earns double the points!";
+};
+
+// ==========================================
+// REVEAL ANSWER
+// ==========================================
+
+document.getElementById("revealBtn").onclick = () => {
+
+  if(!current || current.phase !== "first") return;
+
+  document.getElementById("answer").classList.add("show");
+
+  document.getElementById("revealBtn").style.display = "none";
+};
+
+// ==========================================
+// FIRST TEAM CORRECT
+// ==========================================
+
+document.getElementById("correctBtn").onclick = () => {
+
+  if(!current || current.phase !== "first") return;
+
+  const earned = current.doubled
+    ? current.baseValue * 2
+    : current.baseValue;
+
+  scores[active] += earned;
+
+  finishQuestion(active);
+};
+
+// ==========================================
+// TRANSFER CONTROL TO OTHER TEAM
+// ==========================================
+
+document.getElementById("transferBtn").onclick = () => {
+
+  if(!current || current.phase !== "first") return;
+
+  // Double Jeopardy penalty applies only
+  // to the team that originally selected it.
+
+  if(current.doubled) {
+
+    scores[current.firstTeam] -= 100;
   }
+
+  // Switch control.
+  active = 1 - current.firstTeam;
+
+  current.phase = "transfer";
+
+  document.getElementById("status").textContent =
+    "TRANSFERRED! " + teamName(active) + " gets this question!";
+
+  document.getElementById("firstActions").style.display = "none";
+  document.getElementById("secondActions").style.display = "flex";
+
+  // Hide the answer so the other team gets a fair chance.
+  document.getElementById("answer").classList.remove("show");
+
+  document.getElementById("revealBtn").style.display = "none";
+
+  document.getElementById("doubleBtn").style.display = "none";
+
+  document.getElementById("doubleInfo").textContent = "";
+
+  document.getElementById("modalInstructions").textContent =
+    teamName(active) + " now gets a chance at this question. " +
+    "If correct, they earn the regular point value. Either way, they get the next turn.";
+
+  update();
+};
+
+// ==========================================
+// SECOND TEAM CORRECT
+// ==========================================
+
+document.getElementById("secondCorrectBtn").onclick = () => {
+
+  if(!current || current.phase !== "transfer") return;
+
+  // Transferred team receives regular points,
+  // not the original team's Double Jeopardy bonus.
+
+  scores[active] += current.baseValue;
+
+  finishQuestion(active);
+};
+
+// ==========================================
+// SECOND TEAM INCORRECT
+// ==========================================
+
+document.getElementById("secondWrongBtn").onclick = () => {
+
+  if(!current || current.phase !== "transfer") return;
+
+  // No points awarded or deducted.
+  // Transferred team keeps control.
+
+  finishQuestion(active);
+};
+
+// ==========================================
+// FINISH QUESTION
+// ==========================================
+
+function finishQuestion(nextTeam) {
+
+  active = nextTeam;
+
+  used.add(current.key);
+
+  current = null;
+
+  modal.classList.remove("show");
+
+  build();
+  update();
 }
 
-document.getElementById('revealBtn').onclick = () => {
-  document.getElementById('answer').classList.add('show');
-  document.getElementById('revealBtn').style.display = 'none';
-  document.getElementById('correctBtn').disabled = false;
-  document.getElementById('wrongBtn').disabled = false;
-};
+// ==========================================
+// FINAL RESULTS
+// ==========================================
 
-document.getElementById('correctBtn').onclick = () => {
-  scores[active] += current.value;
-  closeClue();
-  update();
-};
+document.getElementById("resultsBtn").onclick = () => {
 
-document.getElementById('wrongBtn').onclick = () => {
-  scores[active] -= current.value;
-  closeClue();
-  update();
-};
+  const name0 = teamName(0);
+  const name1 = teamName(1);
 
-document.getElementById('closeBtn').onclick = closeClue;
+  document.getElementById("finalScores").innerHTML = `
+    <div class="result-score">
+      ${escapeHTML(name0)}: ${formatMoney(scores[0])}
+    </div>
+    <div class="result-score">
+      ${escapeHTML(name1)}: ${formatMoney(scores[1])}
+    </div>
+  `;
 
-document.getElementById('switchBtn').onclick = () => {
-  active = 1-active;
-  update();
-};
+  let result;
 
-document.getElementById('resetBtn').onclick = () => {
-  if(confirm('Reset all scores and bring back every clue?')) {
-    scores = [0,0];
-    active = 0;
-    used.clear();
-    build();
-    update();
+  if(scores[0] > scores[1]) {
+
+    result = "🏆 " + name0 + " WINS!";
+
+  } else if(scores[1] > scores[0]) {
+
+    result = "🏆 " + name1 + " WINS!";
+
+  } else {
+
+    result = "🤝 IT'S A TIE!";
   }
+
+  document.getElementById("winner").textContent = result;
+
+  resultsModal.classList.add("show");
 };
+
+function escapeHTML(value) {
+
+  return value.replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+document.getElementById("resultsCloseBtn").onclick = () => {
+
+  resultsModal.classList.remove("show");
+};
+
+// ==========================================
+// RESET GAME
+// ==========================================
+
+document.getElementById("resetBtn").onclick = () => {
+
+  if(!confirm("Reset all scores and start a completely new game?")) {
+    return;
+  }
+
+  scores = [0,0];
+  active = 0;
+  current = null;
+
+  used.clear();
+
+  // Generate three new action challenges
+  // and eight new Double Jeopardy clues.
+
+  randomizeSpecialQuestions();
+
+  modal.classList.remove("show");
+  resultsModal.classList.remove("show");
+
+  build();
+  update();
+};
+
+// ==========================================
+// TEAM NAME CHANGES
+// ==========================================
 
 for(let i=0;i<2;i++) {
-  document.getElementById('team'+i).addEventListener('input',update);
+
+  document.getElementById("team"+i)
+    .addEventListener("input",update);
 }
+
+// ==========================================
+// START GAME
+// ==========================================
+
+randomizeSpecialQuestions();
 
 build();
 update();
+
 </script>
+
 </body>
 </html>
